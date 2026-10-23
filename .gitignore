@@ -21,3 +21,4 @@ Thumbs.db
 ### Segredos locais ###
 .env
 application-secret.properties
+credenciais.properties

@@ -103,8 +103,22 @@ sql/script-dados.sql
 
 ### 2. Credenciais (nunca no código)
 
-O `application.properties` lê as credenciais de variáveis de ambiente. No repositório só há
-placeholders (`SEU_RM` / `SUA_SENHA`).
+No repositório só há placeholders (`SEU_RM` / `SUA_SENHA`). Há dois jeitos de informar as
+credenciais reais:
+
+**Opção A — arquivo local (recomendado).** Copie o modelo e preencha. O `credenciais.properties`
+está no `.gitignore` e é carregado pelo `application.properties` via `spring.config.import`:
+
+```bash
+cp credenciais.example.properties credenciais.properties
+```
+
+```properties
+spring.datasource.username=RM000000
+spring.datasource.password=sua_senha
+```
+
+**Opção B — variáveis de ambiente:**
 
 ```bash
 # Linux / macOS / Git Bash
@@ -330,9 +344,8 @@ Nenhum repository tem `@Query` nem SQL: tudo é derived query, gerada pelo nome 
 
 Com `spring.jpa.show-sql=true` o SQL real aparece no console a cada requisição.
 
-As checagens de "já existe?" usam `countBy...` em vez de `existsBy...`: o Hibernate 7 monta o
-`existsBy` com `FETCH FIRST 1 ROWS ONLY`, sintaxe que só existe a partir do Oracle 12c, e o Oracle
-da FIAP usado na Sprint 3 é 11g. `COUNT(*)` roda em qualquer versão.
+As checagens de "já existe?" (equipe com trechos, trecho com intervenções, faixa repetida) usam
+`countBy...` e o service compara com zero. Testado no Oracle da FIAP (versão 19.3).
 
 > O campo se chama `nivelVegetacao` desde a Sprint 1, por isso o método é
 > `findByNivelVegetacaoGreaterThanEqual...` e não `findByNivelVegetacaoCmGreaterThanEqual`.

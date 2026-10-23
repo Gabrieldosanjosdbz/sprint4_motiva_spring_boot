@@ -16,7 +16,6 @@ public interface IntervencaoRepository extends JpaRepository<Intervencao, Long> 
 
     List<Intervencao> findByDataExecucaoBetween(LocalDateTime inicio, LocalDateTime fim);
 
-    // count em vez de exists: o exists usa FETCH FIRST, que não roda no Oracle 11g
     long countByTrechoId(Long idTrecho);
 
     long countByEquipeId(Long idEquipe);
