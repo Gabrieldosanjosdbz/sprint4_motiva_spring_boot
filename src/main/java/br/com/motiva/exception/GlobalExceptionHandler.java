@@ -78,7 +78,7 @@ public class GlobalExceptionHandler {
 
     private ResponseEntity<ErroResponse> erro(HttpStatus status, String mensagem,
                                               HttpServletRequest req, Map<String, String> campos) {
-        ErroResponse corpo = new ErroResponse(LocalDateTime.now(), status.value(), status.getReasonPhrase(),
+        ErroResponse corpo = new ErroResponse(LocalDateTime.now().withNano(0), status.value(), status.getReasonPhrase(),
                 mensagem, req.getRequestURI(), campos);
         return ResponseEntity.status(status).body(corpo);
     }
