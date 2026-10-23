@@ -88,7 +88,7 @@ public class TrechoService {
     @Transactional
     public void remover(Long id) {
         TrechoRodovia trecho = buscarEntidade(id);
-        if (intervencaoRepository.existsByTrechoId(id)) {
+        if (intervencaoRepository.countByTrechoId(id) > 0) {
             throw new ConflitoException("Trecho " + id + " tem intervenções no histórico e não pode ser removido");
         }
         trechoRepository.delete(trecho);
@@ -115,8 +115,8 @@ public class TrechoService {
 
     private void garantirFaixaLivre(TrechoRequest dados, Long idAtual) {
         String rodovia = dados.rodovia().trim().toUpperCase();
-        boolean ocupada = trechoRepository.existsByIdentificacaoRodoviaAndQuilometroInicialAndQuilometroFinal(
-                rodovia, dados.kmInicial(), dados.kmFinal());
+        boolean ocupada = trechoRepository.countByIdentificacaoRodoviaAndQuilometroInicialAndQuilometroFinal(
+                rodovia, dados.kmInicial(), dados.kmFinal()) > 0;
         if (!ocupada) {
             return;
         }

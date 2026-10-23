@@ -60,10 +60,10 @@ public class EquipeService {
     public void remover(Long id) {
         EquipeManutencao equipe = buscarEntidade(id);
         // na Sprint 3 isso estourava ORA-02292; agora a regra é checada antes
-        if (trechoRepository.existsByEquipeResponsavelId(id)) {
+        if (trechoRepository.countByEquipeResponsavelId(id) > 0) {
             throw new ConflitoException("Equipe " + id + " ainda é responsável por trechos");
         }
-        if (intervencaoRepository.existsByEquipeId(id)) {
+        if (intervencaoRepository.countByEquipeId(id) > 0) {
             throw new ConflitoException("Equipe " + id + " tem intervenções registradas no histórico");
         }
         equipeRepository.delete(equipe);

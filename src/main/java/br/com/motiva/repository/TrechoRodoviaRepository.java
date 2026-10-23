@@ -15,8 +15,8 @@ public interface TrechoRodoviaRepository extends JpaRepository<TrechoRodovia, Lo
 
     List<TrechoRodovia> findByIdentificacaoRodoviaIgnoreCase(String rodovia);
 
-    boolean existsByEquipeResponsavelId(Long idEquipe);
+    long countByEquipeResponsavelId(Long idEquipe);
 
-    boolean existsByIdentificacaoRodoviaAndQuilometroInicialAndQuilometroFinal(
+    long countByIdentificacaoRodoviaAndQuilometroInicialAndQuilometroFinal(
             String rodovia, Double kmInicial, Double kmFinal);
 }
